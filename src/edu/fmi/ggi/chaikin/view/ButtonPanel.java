@@ -1,12 +1,15 @@
-package edu.fmi.ggi.chaikin;
+package edu.fmi.ggi.chaikin.view;
 
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.LayoutManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
+
+import edu.fmi.ggi.chaikin.listeners.DrawingCallback;
 
 public class ButtonPanel extends JPanel {
 
@@ -56,24 +59,30 @@ public class ButtonPanel extends JPanel {
 	 */
 	private static final String BACKGROUND_BUTTON_LAYOUT = "#AFB3B6";
 
-	public ButtonPanel() {
-		this(null);
-	}
-
-	public ButtonPanel(boolean isDoubleBuffered) {
-		this(null, isDoubleBuffered);
-	}
-
-	public ButtonPanel(LayoutManager layout, boolean isDoubleBuffered) {
-		super(new FlowLayout(), isDoubleBuffered);
+	public ButtonPanel(final DrawingCallback callback) {
+		super(new FlowLayout(), false);
 		setBackground(Color.decode(BACKGROUND_BUTTON_LAYOUT));
 		setPreferredSize(new Dimension(WIDTH_CONTAINER, HEIGHT_CONTAINER));
 
 		final Button closePolygonButton = getButton(TEXT_BUTTON_CLOSE_POLYGON);
-		add(closePolygonButton, (Integer) FlowLayout.LEFT);
+		closePolygonButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				callback.onClosePolygonRequired();
+			}
+		});
+		add(closePolygonButton);
 
 		final Button smoothPolygonButton = getButton(TEXT_BUTTON_SMOOTH_POLYGON);
-		add(smoothPolygonButton, (Integer) FlowLayout.RIGHT);
+		smoothPolygonButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				callback.onSmoothPolygonRequired();
+			}
+		});
+		add(smoothPolygonButton);
 	}
 
 	private Button getButton(final String title) {
@@ -82,10 +91,6 @@ public class ButtonPanel extends JPanel {
 		button.setBackground(Color.decode(BACKGROUND_BUTTON));
 		button.setFocusable(false);
 		return button;
-	}
-
-	public ButtonPanel(LayoutManager layout) {
-		this(layout, false);
 	}
 
 }

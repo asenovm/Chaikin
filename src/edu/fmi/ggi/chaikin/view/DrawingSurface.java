@@ -1,15 +1,18 @@
-package edu.fmi.ggi.chaikin;
+package edu.fmi.ggi.chaikin.view;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.GraphicsConfiguration;
-import java.awt.HeadlessException;
 import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.JFrame;
 
-public class DrawingSurface extends JFrame implements DrawingObserver {
+import edu.fmi.ggi.chaikin.listeners.DrawingCallback;
+import edu.fmi.ggi.chaikin.listeners.DrawingObserver;
+import edu.fmi.ggi.chaikin.model.Point;
+
+public class DrawingSurface extends JFrame implements DrawingObserver,
+		DrawingCallback {
 
 	/**
 	 * {@value}
@@ -18,31 +21,22 @@ public class DrawingSurface extends JFrame implements DrawingObserver {
 
 	private final DrawingPanel panel;
 
-	public DrawingSurface() {
-		this("");
-	}
+	private final DrawingCallback callback;
 
-	public DrawingSurface(GraphicsConfiguration gc) {
-		this("", gc);
-	}
-
-	public DrawingSurface(String title, GraphicsConfiguration gc) {
-		super(title, gc);
+	public DrawingSurface(final DrawingCallback callback) {
 		setLayout(new BorderLayout(0, 5));
+
+		this.callback = callback;
 
 		panel = new DrawingPanel();
 
 		final Container container = getContentPane();
 		container.add(panel, BorderLayout.PAGE_START);
-		container.add(new ButtonPanel(), BorderLayout.PAGE_END);
+		container.add(new ButtonPanel(this), BorderLayout.PAGE_END);
 
 		pack();
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
-
-	public DrawingSurface(String title) throws HeadlessException {
-		this(title, null);
 	}
 
 	@Override
@@ -53,6 +47,16 @@ public class DrawingSurface extends JFrame implements DrawingObserver {
 	@Override
 	public synchronized void addMouseListener(final MouseListener listener) {
 		panel.addMouseListener(listener);
+	}
+
+	@Override
+	public void onClosePolygonRequired() {
+		callback.onClosePolygonRequired();
+	}
+
+	@Override
+	public void onSmoothPolygonRequired() {
+		callback.onSmoothPolygonRequired();
 	}
 
 }

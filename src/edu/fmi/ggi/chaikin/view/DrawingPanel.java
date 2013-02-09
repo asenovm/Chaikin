@@ -1,4 +1,4 @@
-package edu.fmi.ggi.chaikin;
+package edu.fmi.ggi.chaikin.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,7 +8,14 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import edu.fmi.ggi.chaikin.model.Point;
+
 public class DrawingPanel extends JPanel {
+
+	/**
+	 * {@value}
+	 */
+	private static final String BACKGROUND_COLOR_DRAWING_PANEL = "#E3E3E3";
 
 	/**
 	 * {@value}
@@ -41,9 +48,7 @@ public class DrawingPanel extends JPanel {
 		setMinimumSize(dimension);
 		setMaximumSize(dimension);
 
-		setBorder(null);
-
-		setBackground(Color.decode("#E3E3E3"));
+		setBackground(Color.decode(BACKGROUND_COLOR_DRAWING_PANEL));
 	}
 
 	public DrawingPanel(LayoutManager layout) {
@@ -52,8 +57,6 @@ public class DrawingPanel extends JPanel {
 
 	public void draw(final List<Point> points) {
 		final Graphics graphics = getGraphics();
-		System.out.println("first point is " + points.get(0));
-		System.out.println("last point is " + points.get(points.size() - 1));
 		for (int i = 0; i < points.size() - 1; ++i) {
 			final Point startPoint = points.get(i);
 			final Point endPoint = points.get(i + 1);

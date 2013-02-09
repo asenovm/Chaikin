@@ -3,9 +3,13 @@ package edu.fmi.ggi.chaikin;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class Drawer {
+import edu.fmi.ggi.chaikin.listeners.DrawingCallback;
+import edu.fmi.ggi.chaikin.model.Polygon;
+import edu.fmi.ggi.chaikin.view.DrawingSurface;
 
-	private final DrawingPolygon polygon;
+public class Drawer implements DrawingCallback {
+
+	private final Polygon polygon;
 
 	private final DrawingSurface surface;
 
@@ -17,8 +21,8 @@ public class Drawer {
 	}
 
 	public Drawer() {
-		polygon = new DrawingPolygon();
-		surface = new DrawingSurface();
+		polygon = new Polygon();
+		surface = new DrawingSurface(this);
 
 		polygon.addObserver(surface);
 		surface.addMouseListener(new DrawingSurfaceListener());
@@ -26,5 +30,15 @@ public class Drawer {
 
 	public static void main(String[] args) {
 		new Drawer();
+	}
+
+	@Override
+	public void onClosePolygonRequired() {
+		polygon.close();
+	}
+
+	@Override
+	public void onSmoothPolygonRequired() {
+		System.out.println("smooth polygon required!!!");
 	}
 }

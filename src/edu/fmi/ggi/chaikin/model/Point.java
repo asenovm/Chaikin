@@ -1,4 +1,4 @@
-package edu.fmi.ggi.chaikin;
+package edu.fmi.ggi.chaikin.model;
 
 public class Point {
 	public final int x;
