@@ -3,7 +3,6 @@ package edu.fmi.ggi.chaikin.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.LayoutManager;
 import java.awt.Point;
 import java.util.List;
 
@@ -31,17 +30,10 @@ public class DrawingPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = -3936453562176627798L;
 
+	/**
+	 * Constructs a new drawing panel in which the user drawings are being drawn
+	 */
 	public DrawingPanel() {
-		this(null);
-	}
-
-	public DrawingPanel(boolean isDoubleBuffered) {
-		this(null, isDoubleBuffered);
-	}
-
-	public DrawingPanel(LayoutManager layout, boolean isDoubleBuffered) {
-		super(layout, isDoubleBuffered);
-
 		final Dimension dimension = new Dimension(PANEL_WIDTH, PANEL_HEIGHT);
 		setPreferredSize(dimension);
 		setMinimumSize(dimension);
@@ -50,10 +42,14 @@ public class DrawingPanel extends JPanel {
 		setBackground(Color.decode(BACKGROUND_COLOR_DRAWING_PANEL));
 	}
 
-	public DrawingPanel(LayoutManager layout) {
-		this(layout, false);
-	}
-
+	/**
+	 * Draws a polygon out of the respective list of points that represents its
+	 * edges
+	 * 
+	 * @param points
+	 *            the list of points that represents the edges of the polygon
+	 *            that is to be drawn
+	 */
 	public void draw(final List<Point> points) {
 		final Graphics graphics = getGraphics();
 		for (int i = 0; i < points.size() - 1; ++i) {
