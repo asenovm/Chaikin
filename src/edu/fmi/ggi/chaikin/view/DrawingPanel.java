@@ -4,11 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.LayoutManager;
+import java.awt.Point;
 import java.util.List;
 
 import javax.swing.JPanel;
-
-import edu.fmi.ggi.chaikin.model.Point;
 
 public class DrawingPanel extends JPanel {
 

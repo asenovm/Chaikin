@@ -2,6 +2,7 @@ package edu.fmi.ggi.chaikin.view;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Point;
 import java.awt.event.MouseListener;
 import java.util.List;
 
@@ -9,7 +10,6 @@ import javax.swing.JFrame;
 
 import edu.fmi.ggi.chaikin.listeners.DrawingCallback;
 import edu.fmi.ggi.chaikin.listeners.DrawingObserver;
-import edu.fmi.ggi.chaikin.model.Point;
 
 public class DrawingSurface extends JFrame implements DrawingObserver,
 		DrawingCallback {

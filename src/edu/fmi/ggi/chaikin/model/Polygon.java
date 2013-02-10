@@ -1,5 +1,6 @@
 package edu.fmi.ggi.chaikin.model;
 
+import java.awt.Point;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -109,10 +110,16 @@ public class Polygon {
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
 		for (final Point point : points) {
-			builder.append(point);
-			builder.append(PATTERN_SPLIT_POINT);
+			builder.append(point.x);
+			builder.append(" ");
+			builder.append(point.y);
+			builder.append(" ");
 		}
-		builder.append(points.get(1));
+
+		final Point startPoint = points.get(1);
+		builder.append(startPoint.x);
+		builder.append(" ");
+		builder.append(startPoint.y);
 		return builder.toString();
 	}
 
@@ -173,7 +180,6 @@ public class Polygon {
 
 			matcher.region(getMatcherStart(matcher), getMatcherEnd(matcher));
 		}
-
 		points.add(points.get(0));
 	}
 

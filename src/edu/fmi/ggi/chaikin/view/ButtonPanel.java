@@ -59,6 +59,15 @@ public class ButtonPanel extends JPanel {
 	 */
 	private static final String BACKGROUND_BUTTON_LAYOUT = "#AFB3B6";
 
+	/**
+	 * Constructs a new panel for holding the drawing-related buttons that will
+	 * call the respective methods of the {@link DrawingCallback} given when
+	 * needed
+	 * 
+	 * @param callback
+	 *            the callback that is to be called when the respective events
+	 *            in the {@link ButtonPanel} occur
+	 */
 	public ButtonPanel(final DrawingCallback callback) {
 		super(new FlowLayout(), false);
 		setBackground(Color.decode(BACKGROUND_BUTTON_LAYOUT));
