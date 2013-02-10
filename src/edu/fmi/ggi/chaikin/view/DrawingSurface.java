@@ -1,62 +1,69 @@
 package edu.fmi.ggi.chaikin.view;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.event.MouseListener;
 import java.util.List;
 
-import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-import edu.fmi.ggi.chaikin.listeners.DrawingCallback;
-import edu.fmi.ggi.chaikin.listeners.DrawingObserver;
-
-public class DrawingSurface extends JFrame implements DrawingObserver,
-		DrawingCallback {
+/**
+ * A layout to represent the box in which the user can draw the form he'd like
+ * to be smoothen
+ * 
+ * @author martin
+ * 
+ */
+public class DrawingSurface extends JPanel {
 
 	/**
 	 * {@value}
 	 */
-	private static final long serialVersionUID = -7055198570822987608L;
+	private static final String BACKGROUND_COLOR_DRAWING_PANEL = "#E3E3E3";
 
-	private final DrawingPanel panel;
+	/**
+	 * {@value}
+	 */
+	private static final int PANEL_HEIGHT = 500;
 
-	private final DrawingCallback callback;
+	/**
+	 * {@value}
+	 */
+	private static final int PANEL_WIDTH = 500;
 
-	public DrawingSurface(final DrawingCallback callback) {
-		setLayout(new BorderLayout(0, 5));
+	/**
+	 * {@value}
+	 */
+	private static final long serialVersionUID = -3936453562176627798L;
 
-		this.callback = callback;
+	/**
+	 * Constructs a new drawing panel in which the user drawings are being drawn
+	 */
+	public DrawingSurface() {
+		final Dimension dimension = new Dimension(PANEL_WIDTH, PANEL_HEIGHT);
+		setPreferredSize(dimension);
+		setMinimumSize(dimension);
+		setMaximumSize(dimension);
 
-		panel = new DrawingPanel();
-
-		final Container container = getContentPane();
-		container.add(panel, BorderLayout.PAGE_START);
-		container.add(new ButtonPanel(this), BorderLayout.PAGE_END);
-
-		pack();
-		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBackground(Color.decode(BACKGROUND_COLOR_DRAWING_PANEL));
 	}
 
-	@Override
-	public void onModelChanged(final List<Point> points) {
-		panel.draw(points);
+	/**
+	 * Draws a polygon out of the respective list of points that represents its
+	 * edges
+	 * 
+	 * @param points
+	 *            the list of points that represents the edges of the polygon
+	 *            that is to be drawn
+	 */
+	public void draw(final List<Point> points) {
+		final Graphics graphics = getGraphics();
+		for (int i = 0; i < points.size() - 1; ++i) {
+			final Point startPoint = points.get(i);
+			final Point endPoint = points.get(i + 1);
+			graphics.drawLine(startPoint.x, startPoint.y, endPoint.x,
+					endPoint.y);
+		}
 	}
-
-	@Override
-	public synchronized void addMouseListener(final MouseListener listener) {
-		panel.addMouseListener(listener);
-	}
-
-	@Override
-	public void onClosePolygonRequired() {
-		callback.onClosePolygonRequired();
-	}
-
-	@Override
-	public void onSmoothPolygonRequired() {
-		callback.onSmoothPolygonRequired();
-	}
-
 }
