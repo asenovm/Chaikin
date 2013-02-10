@@ -12,37 +12,96 @@ import edu.fmi.ggi.chaikin.listeners.DrawingObserver;
 
 public class Polygon {
 
+	/**
+	 * {@value}
+	 */
+	private static final String PATTERN_SPLIT_POINT = " ";
+
+	/**
+	 * {@value}
+	 */
+	private static final String PATTERN_REPLACE_POINT = "(\\d+) (\\d+) (\\d+) (\\d+) (\\d+) (\\d+)";
+
+	/**
+	 * The pattern to be used for replacing the points in our polygon
+	 */
+	private static final Pattern PATTERN_L_SYSTEM;
+
 	private final Set<DrawingObserver> observers;
 
 	private final List<Point> points;
 
+	static {
+		PATTERN_L_SYSTEM = Pattern.compile(PATTERN_REPLACE_POINT);
+	}
+
+	/**
+	 * Constructs a new empty polygon
+	 */
 	public Polygon() {
 		observers = new LinkedHashSet<DrawingObserver>();
 		points = new LinkedList<Point>();
 	}
 
+	/**
+	 * Adds the point with the specified <tt>x</tt> and <tt>y</tt> coordinates
+	 * to this polygon.
+	 * 
+	 * @param x
+	 *            the <tt>x</tt> coordinate of the point that is to be added
+	 * @param y
+	 *            the <tt>y</tt> coordinate of the point that is to be added
+	 */
 	public void addPoint(final int x, final int y) {
 		points.add(new Point(x, y));
 		notifyObservers();
 	}
 
-	private void notifyObservers() {
-		for (final DrawingObserver observer : observers) {
-			observer.onModelChanged(Collections.unmodifiableList(points));
-		}
-	}
-
+	/**
+	 * Adds the specified <tt>observer</tt> to the list of observers that is to
+	 * be notified when the polygon changes
+	 * 
+	 * @param observer
+	 *            the observer that is to be notified when the polygon changes
+	 * @return whether or not the <tt>observer</tt> has been successfully added
+	 *         to the notification list of the model
+	 */
 	public boolean addObserver(final DrawingObserver observer) {
 		return observers.add(observer);
 	}
 
+	/**
+	 * Removes the observer given from the notification list
+	 * 
+	 * @param observer
+	 *            the observer that is to be removed from the notification list
+	 * @return whether or not the <tt>observer</tt> given has been successfully
+	 *         removed from the notification list
+	 */
 	public boolean removeObserver(final DrawingObserver observer) {
 		return observers.remove(observer);
 	}
 
+	/**
+	 * Closes the polygon. That is to connect the last point added with the
+	 * initial point of the polygon
+	 */
 	public void close() {
 		final Point first = points.get(0);
 		points.add(first);
+		notifyObservers();
+	}
+
+	/**
+	 * Smoothens the edges of the polygon so that it forms a B-spline with the
+	 * same control points as the vertexes of the polygon
+	 */
+	public void smoothenPolygon() {
+		final String vertexes = this.toString();
+
+		points.clear();
+		smoothenEdges(vertexes);
+
 		notifyObservers();
 	}
 
@@ -51,45 +110,71 @@ public class Polygon {
 		final StringBuilder builder = new StringBuilder();
 		for (final Point point : points) {
 			builder.append(point);
-			builder.append(" ");
+			builder.append(PATTERN_SPLIT_POINT);
 		}
 		builder.append(points.get(1));
 		return builder.toString();
 	}
 
-	public void smoothEdges() {
-		final String vertexes = toString();
-		System.out.println("*****vertexess*******");
-		System.out.println(vertexes);
-		System.out.println("*********************");
-		points.clear();
-		final Pattern pattern = Pattern
-				.compile("(\\d+) (\\d+) (\\d+) (\\d+) (\\d+) (\\d+)");
-		final Matcher matcher = pattern.matcher(vertexes);
-		while (matcher.find()) {
-			System.out.println("current group is " + matcher.group());
-			String[] splitGroup = matcher.group().split(" ");
-			final Point start = new Point(Integer.parseInt(splitGroup[0]),
-					Integer.parseInt(splitGroup[1]));
-			final Point middle = new Point(Integer.parseInt(splitGroup[2]),
-					Integer.parseInt(splitGroup[3]));
-			final Point end = new Point(Integer.parseInt(splitGroup[4]),
-					Integer.parseInt(splitGroup[5]));
-			final Point firstNewPoint = new Point((int) Math.round(0.25
-					* start.x + 0.75 * middle.x), (int) Math.round(0.25
-					* start.y + 0.75 * middle.y));
-			final Point secondNewPoint = new Point((int) Math.round(0.75
-					* middle.x + 0.25 * end.x), (int) Math.round(0.75
-					* middle.y + 0.25 * end.y));
+	private Point getNewEndPoint(final Point middle, final Point end) {
+		return new Point((int) Math.round(0.75 * middle.x + 0.25 * end.x),
+				(int) Math.round(0.75 * middle.y + 0.25 * end.y));
+	}
 
-			points.add(firstNewPoint);
-			points.add(secondNewPoint);
-			matcher.region(matcher.regionStart() + matcher.group(1).length()
-					+ matcher.group(2).length() + 2, matcher.regionEnd());
+	private Point getNewStartPoint(final Point start, final Point middle) {
+		return new Point((int) Math.round(0.25 * start.x + 0.75 * middle.x),
+				(int) Math.round(0.25 * start.y + 0.75 * middle.y));
+	}
+
+	private Point getEndPoint(String[] splitGroup) {
+		return new Point(Integer.parseInt(splitGroup[4]),
+				Integer.parseInt(splitGroup[5]));
+	}
+
+	private Point getMiddlePoint(String[] splitGroup) {
+		return new Point(Integer.parseInt(splitGroup[2]),
+				Integer.parseInt(splitGroup[3]));
+	}
+
+	private Point getStartPoint(String[] splitGroup) {
+		return new Point(Integer.parseInt(splitGroup[0]),
+				Integer.parseInt(splitGroup[1]));
+	}
+
+	private int getMatcherEnd(final Matcher matcher) {
+		return matcher.regionEnd();
+	}
+
+	private int getMatcherStart(final Matcher matcher) {
+		return matcher.regionStart() + matcher.group(1).length()
+				+ matcher.group(2).length() + 2;
+	}
+
+	private void notifyObservers() {
+		for (final DrawingObserver observer : observers) {
+			observer.onModelChanged(Collections.unmodifiableList(points));
+		}
+	}
+
+	private void smoothenEdges(final String vertexes) {
+		final Matcher matcher = PATTERN_L_SYSTEM.matcher(vertexes);
+		while (matcher.find()) {
+			String[] splitGroup = matcher.group().split(PATTERN_SPLIT_POINT);
+
+			final Point start = getStartPoint(splitGroup);
+			final Point middle = getMiddlePoint(splitGroup);
+			final Point end = getEndPoint(splitGroup);
+
+			final Point newStartPoint = getNewStartPoint(start, middle);
+			final Point newEndPoint = getNewEndPoint(middle, end);
+
+			points.add(newStartPoint);
+			points.add(newEndPoint);
+
+			matcher.region(getMatcherStart(matcher), getMatcherEnd(matcher));
 		}
 
 		points.add(points.get(0));
-		notifyObservers();
 	}
 
 }

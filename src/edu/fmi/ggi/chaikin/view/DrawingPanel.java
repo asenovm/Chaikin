@@ -57,7 +57,6 @@ public class DrawingPanel extends JPanel {
 
 	public void draw(final List<Point> points) {
 		final Graphics graphics = getGraphics();
-//		graphics.clearRect(0, 0, PANEL_WIDTH, PANEL_HEIGHT);
 		for (int i = 0; i < points.size() - 1; ++i) {
 			final Point startPoint = points.get(i);
 			final Point endPoint = points.get(i + 1);
