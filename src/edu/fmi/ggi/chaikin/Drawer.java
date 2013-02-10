@@ -39,6 +39,6 @@ public class Drawer implements DrawingCallback {
 
 	@Override
 	public void onSmoothPolygonRequired() {
-		System.out.println("smooth polygon required!!!");
+		polygon.smoothEdges();
 	}
 }
