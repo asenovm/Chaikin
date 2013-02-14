@@ -32,8 +32,8 @@ public class Polygon {
 	 * @param y
 	 *            the <tt>y</tt> coordinate of the point that is to be added
 	 */
-	public void addPoint(final int x, final int y) {
-		points.add(new Point(x, y));
+	public void addPoint(final Point point) {
+		points.add(point);
 		notifyObservers();
 	}
 

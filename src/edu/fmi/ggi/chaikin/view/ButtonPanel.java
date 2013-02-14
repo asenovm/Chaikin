@@ -37,6 +37,11 @@ public class ButtonPanel extends JPanel {
 	/**
 	 * {@value}
 	 */
+	private static final String TEXT_BUTTON_CLEAR_SCREEN = "Clear screen";
+
+	/**
+	 * {@value}
+	 */
 	private static final String TEXT_BUTTON_CLOSE_POLYGON = "Close Polygon";
 
 	/**
@@ -73,16 +78,24 @@ public class ButtonPanel extends JPanel {
 		setBackground(Color.decode(BACKGROUND_BUTTON_LAYOUT));
 		setPreferredSize(new Dimension(WIDTH_CONTAINER, HEIGHT_CONTAINER));
 
-		final Button closePolygonButton = getButton(TEXT_BUTTON_CLOSE_POLYGON);
-		closePolygonButton.addActionListener(new ActionListener() {
+		addClosePolygonButton(callback);
+		addSmoothPolygonButton(callback);
+		addClearScreenButton(callback);
+	}
+
+	private void addClearScreenButton(final DrawingCallback callback) {
+		final Button clearScreenButton = getButton(TEXT_BUTTON_CLEAR_SCREEN);
+		clearScreenButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(final ActionEvent event) {
-				callback.onClosePolygonRequired();
+				callback.onClearScreenRequired();
 			}
 		});
-		add(closePolygonButton);
+		add(clearScreenButton);
+	}
 
+	private void addSmoothPolygonButton(final DrawingCallback callback) {
 		final Button smoothPolygonButton = getButton(TEXT_BUTTON_SMOOTH_POLYGON);
 		smoothPolygonButton.addActionListener(new ActionListener() {
 
@@ -92,16 +105,18 @@ public class ButtonPanel extends JPanel {
 			}
 		});
 		add(smoothPolygonButton);
-		
-		final Button clearScreenButton = getButton("Clear screen");
-		clearScreenButton.addActionListener(new ActionListener() {
-			
+	}
+
+	private void addClosePolygonButton(final DrawingCallback callback) {
+		final Button closePolygonButton = getButton(TEXT_BUTTON_CLOSE_POLYGON);
+		closePolygonButton.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(final ActionEvent event) {
-				callback.onClearScreenRequired();
+				callback.onClosePolygonRequired();
 			}
 		});
-		add(clearScreenButton);
+		add(closePolygonButton);
 	}
 
 	private Button getButton(final String title) {

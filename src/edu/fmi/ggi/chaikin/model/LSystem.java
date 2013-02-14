@@ -30,6 +30,8 @@ public class LSystem {
 
 	private final String input;
 
+	private final StringBuilder builder;
+
 	/**
 	 * Construct a new L-system that will parse the <tt>input</tt> string using
 	 * its internal rules
@@ -39,6 +41,7 @@ public class LSystem {
 	 */
 	public LSystem(final String input) {
 		this.input = input;
+		builder = new StringBuilder();
 	}
 
 	/**
@@ -55,8 +58,6 @@ public class LSystem {
 	private Collection<Point> smoothenEdges(final String vertexes) {
 		final Matcher matcher = PATTERN_L_SYSTEM.matcher(vertexes);
 
-		final StringBuilder builder = new StringBuilder();
-
 		while (matcher.find()) {
 			String[] splitGroup = matcher.group().split(PATTERN_SPLIT_POINT);
 
@@ -67,26 +68,28 @@ public class LSystem {
 			final Point newStartPoint = getNewStartPoint(start, middle);
 			final Point newEndPoint = getNewEndPoint(middle, end);
 
-			appendPoint(builder, newStartPoint);
-			appendPoint(builder, newEndPoint);
+			appendPoint(newStartPoint);
+			appendPoint(newEndPoint);
 
 			matcher.region(getMatcherStart(matcher), getMatcherEnd(matcher));
 		}
 
-		return parseAndAddPoints(builder.toString());
+		return parseAndAddPoints();
 	}
 
-	private void appendPoint(final StringBuilder builder, final Point point) {
+	private void appendPoint(final Point point) {
 		builder.append(point.x);
 		builder.append(" ");
 		builder.append(point.y);
 		builder.append(" ");
 	}
 
-	private Collection<Point> parseAndAddPoints(final String points) {
+	private Collection<Point> parseAndAddPoints() {
 		final List<Point> result = new ArrayList<Point>();
 
+		final String points = builder.toString();
 		final String[] stringPoints = points.split(PATTERN_SPLIT_POINT);
+
 		for (int i = 0; i < stringPoints.length - 1; i += 2) {
 			final int x = Integer.parseInt(stringPoints[i]);
 			final int y = Integer.parseInt(stringPoints[i + 1]);

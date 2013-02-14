@@ -18,6 +18,10 @@ public interface DrawingCallback {
 	 * required
 	 */
 	void onSmoothPolygonRequired();
-	
+
+	/**
+	 * A callback fired when the button for clearing the current drawing on the
+	 * screen has been clicked
+	 */
 	void onClearScreenRequired();
 }

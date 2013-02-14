@@ -11,21 +11,21 @@ public class Drawer implements DrawingCallback {
 
 	private final Polygon polygon;
 
-	private final DrawingFrame surface;
+	private final DrawingFrame frame;
 
 	private class DrawingSurfaceListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(final MouseEvent event) {
-			polygon.addPoint(event.getX(), event.getY());
+			polygon.addPoint(event.getPoint());
 		}
 	}
 
 	public Drawer() {
 		polygon = new Polygon();
-		surface = new DrawingFrame(this);
+		frame = new DrawingFrame(this);
 
-		polygon.addObserver(surface);
-		surface.addMouseListener(new DrawingSurfaceListener());
+		polygon.addObserver(frame);
+		frame.addMouseListener(new DrawingSurfaceListener());
 	}
 
 	public static void main(String[] args) {
