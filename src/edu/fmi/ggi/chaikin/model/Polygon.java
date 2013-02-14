@@ -165,6 +165,9 @@ public class Polygon {
 
 	private void smoothenEdges(final String vertexes) {
 		final Matcher matcher = PATTERN_L_SYSTEM.matcher(vertexes);
+
+		final StringBuilder builder = new StringBuilder();
+
 		while (matcher.find()) {
 			String[] splitGroup = matcher.group().split(PATTERN_SPLIT_POINT);
 
@@ -175,12 +178,31 @@ public class Polygon {
 			final Point newStartPoint = getNewStartPoint(start, middle);
 			final Point newEndPoint = getNewEndPoint(middle, end);
 
-			points.add(newStartPoint);
-			points.add(newEndPoint);
+			appendPoint(builder, newStartPoint);
+			appendPoint(builder, newEndPoint);
 
 			matcher.region(getMatcherStart(matcher), getMatcherEnd(matcher));
 		}
-		points.add(points.get(0));
+
+		parseAndAddPoints(builder.toString());
+	}
+
+	private void appendPoint(final StringBuilder builder, final Point point) {
+		builder.append(point.x);
+		builder.append(" ");
+		builder.append(point.y);
+		builder.append(" ");
+	}
+
+	private void parseAndAddPoints(final String points) {
+		final String[] stringPoints = points.split(" ");
+		for (int i = 0; i < stringPoints.length - 1; i += 2) {
+			final int x = Integer.parseInt(stringPoints[i]);
+			final int y = Integer.parseInt(stringPoints[i + 1]);
+			this.points.add(new Point(x, y));
+		}
+
+		this.points.add(this.points.get(0));
 	}
 
 }
