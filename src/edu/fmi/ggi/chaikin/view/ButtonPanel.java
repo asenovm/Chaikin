@@ -92,6 +92,16 @@ public class ButtonPanel extends JPanel {
 			}
 		});
 		add(smoothPolygonButton);
+		
+		final Button clearScreenButton = getButton("Clear screen");
+		clearScreenButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				callback.onClearScreenRequired();
+			}
+		});
+		add(clearScreenButton);
 	}
 
 	private Button getButton(final String title) {

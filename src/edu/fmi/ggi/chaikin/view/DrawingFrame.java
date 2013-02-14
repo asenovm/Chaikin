@@ -25,7 +25,7 @@ public class DrawingFrame extends JFrame implements DrawingObserver,
 	 */
 	private static final long serialVersionUID = -7055198570822987608L;
 
-	private final DrawingSurface panel;
+	private final DrawingSurface drawingSurface;
 
 	private final DrawingCallback callback;
 
@@ -41,10 +41,10 @@ public class DrawingFrame extends JFrame implements DrawingObserver,
 
 		this.callback = callback;
 
-		panel = new DrawingSurface();
+		drawingSurface = new DrawingSurface();
 
 		final Container container = getContentPane();
-		container.add(panel, BorderLayout.PAGE_START);
+		container.add(drawingSurface, BorderLayout.PAGE_START);
 		container.add(new ButtonPanel(this), BorderLayout.PAGE_END);
 
 		pack();
@@ -57,7 +57,7 @@ public class DrawingFrame extends JFrame implements DrawingObserver,
 	 */
 	@Override
 	public void onModelChanged(final List<Point> points) {
-		panel.draw(points);
+		drawingSurface.draw(points);
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class DrawingFrame extends JFrame implements DrawingObserver,
 	 */
 	@Override
 	public synchronized void addMouseListener(final MouseListener listener) {
-		panel.addMouseListener(listener);
+		drawingSurface.addMouseListener(listener);
 	}
 
 	/**
@@ -82,6 +82,11 @@ public class DrawingFrame extends JFrame implements DrawingObserver,
 	@Override
 	public void onSmoothPolygonRequired() {
 		callback.onSmoothPolygonRequired();
+	}
+
+	@Override
+	public void onClearScreenRequired() {
+		drawingSurface.clearScreen();
 	}
 
 }

@@ -41,4 +41,10 @@ public class Drawer implements DrawingCallback {
 	public void onSmoothPolygonRequired() {
 		polygon.smoothenPolygon();
 	}
+
+	@Override
+	public void onClearScreenRequired() {
+		// blank
+	}
+
 }

@@ -18,4 +18,6 @@ public interface DrawingCallback {
 	 * required
 	 */
 	void onSmoothPolygonRequired();
+	
+	void onClearScreenRequired();
 }

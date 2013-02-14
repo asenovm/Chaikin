@@ -66,4 +66,12 @@ public class DrawingSurface extends JPanel {
 					endPoint.y);
 		}
 	}
+
+	public void clearScreen() {
+		final Graphics graphics = getGraphics();
+		graphics.clearRect(0, 0, PANEL_WIDTH, PANEL_HEIGHT);
+		graphics.setColor(Color.decode(BACKGROUND_COLOR_DRAWING_PANEL));
+		graphics.fillRect(0, 0, PANEL_WIDTH, PANEL_HEIGHT);
+		graphics.setColor(Color.BLACK);
+	}
 }
