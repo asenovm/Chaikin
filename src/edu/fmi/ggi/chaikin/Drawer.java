@@ -4,12 +4,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import edu.fmi.ggi.chaikin.listeners.DrawingCallback;
-import edu.fmi.ggi.chaikin.model.Polygon;
+import edu.fmi.ggi.chaikin.model.Curve;
 import edu.fmi.ggi.chaikin.view.DrawingFrame;
 
 public class Drawer implements DrawingCallback {
 
-	private final Polygon polygon;
+	private final Curve polygon;
 
 	private final DrawingFrame frame;
 
@@ -21,7 +21,7 @@ public class Drawer implements DrawingCallback {
 	}
 
 	public Drawer() {
-		polygon = new Polygon();
+		polygon = new Curve();
 		frame = new DrawingFrame(this);
 
 		polygon.addObserver(frame);

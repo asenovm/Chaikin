@@ -9,7 +9,7 @@ import java.util.Set;
 
 import edu.fmi.ggi.chaikin.listeners.DrawingObserver;
 
-public class Polygon {
+public class Curve {
 
 	private final Set<DrawingObserver> observers;
 
@@ -18,7 +18,7 @@ public class Polygon {
 	/**
 	 * Constructs a new empty polygon
 	 */
-	public Polygon() {
+	public Curve() {
 		observers = new LinkedHashSet<DrawingObserver>();
 		points = new LinkedList<Point>();
 	}

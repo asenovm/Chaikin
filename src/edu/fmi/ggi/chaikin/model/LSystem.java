@@ -59,6 +59,8 @@ public abstract class LSystem {
 		return smoothenEdges(input);
 	}
 
+	protected abstract void closeShape(final List<Point> result);
+
 	private Collection<Point> smoothenEdges(final String vertexes) {
 		final Matcher matcher = PATTERN_L_SYSTEM.matcher(vertexes);
 
@@ -94,8 +96,6 @@ public abstract class LSystem {
 		closeShape(result);
 		return result;
 	}
-
-	protected abstract void closeShape(final List<Point> result);
 
 	private void parsePoints(final List<Point> result) {
 		final String points = builder.toString();
