@@ -69,6 +69,63 @@ public class ButtonPanel extends JPanel {
 	 */
 	private static final String BACKGROUND_BUTTON_LAYOUT = "#AFB3B6";
 
+	private abstract class BaseActionListener implements ActionListener {
+
+		protected final DrawingCallback callback;
+
+		protected BaseActionListener(final DrawingCallback callback) {
+			this.callback = callback;
+		}
+	}
+
+	private class CloseActionListener extends BaseActionListener {
+
+		protected CloseActionListener(DrawingCallback callback) {
+			super(callback);
+		}
+
+		@Override
+		public void actionPerformed(final ActionEvent event) {
+			callback.onClosePolygonRequired();
+		}
+	}
+
+	private class SmoothActionListener extends BaseActionListener {
+
+		protected SmoothActionListener(DrawingCallback callback) {
+			super(callback);
+		}
+
+		@Override
+		public void actionPerformed(final ActionEvent event) {
+			callback.onSmoothPolygonRequired();
+		}
+	}
+
+	private class ClearActionListener extends BaseActionListener {
+
+		public ClearActionListener(DrawingCallback callback) {
+			super(callback);
+		}
+
+		@Override
+		public void actionPerformed(final ActionEvent event) {
+			callback.onClearScreenRequired();
+		}
+	}
+
+	private class ResetActionListener extends BaseActionListener {
+
+		public ResetActionListener(DrawingCallback callback) {
+			super(callback);
+		}
+
+		@Override
+		public void actionPerformed(final ActionEvent event) {
+			callback.onResetRequired();
+		}
+	}
+
 	/**
 	 * Constructs a new panel for holding the drawing-related buttons that will
 	 * call the respective methods of the {@link DrawingCallback} given when
@@ -91,50 +148,26 @@ public class ButtonPanel extends JPanel {
 
 	private void addResetButton(final DrawingCallback callback) {
 		final Button resetButton = getButton(TEXT_BUTTON_RESET);
-		resetButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(final ActionEvent event) {
-				callback.onResetRequired();
-			}
-		});
+		resetButton.addActionListener(new ResetActionListener(callback));
 		add(resetButton);
 	}
 
 	private void addClearScreenButton(final DrawingCallback callback) {
 		final Button clearScreenButton = getButton(TEXT_BUTTON_CLEAR_SCREEN);
-		clearScreenButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(final ActionEvent event) {
-				callback.onClearScreenRequired();
-			}
-		});
+		clearScreenButton.addActionListener(new ClearActionListener(callback));
 		add(clearScreenButton);
 	}
 
 	private void addSmoothPolygonButton(final DrawingCallback callback) {
-		final Button smoothPolygonButton = getButton(TEXT_BUTTON_SMOOTH_POLYGON);
-		smoothPolygonButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(final ActionEvent event) {
-				callback.onSmoothPolygonRequired();
-			}
-		});
-		add(smoothPolygonButton);
+		final Button smoothenButton = getButton(TEXT_BUTTON_SMOOTH_POLYGON);
+		smoothenButton.addActionListener(new SmoothActionListener(callback));
+		add(smoothenButton);
 	}
 
 	private void addClosePolygonButton(final DrawingCallback callback) {
-		final Button closePolygonButton = getButton(TEXT_BUTTON_CLOSE_POLYGON);
-		closePolygonButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(final ActionEvent event) {
-				callback.onClosePolygonRequired();
-			}
-		});
-		add(closePolygonButton);
+		final Button closeButton = getButton(TEXT_BUTTON_CLOSE_POLYGON);
+		closeButton.addActionListener(new CloseActionListener(callback));
+		add(closeButton);
 	}
 
 	private Button getButton(final String title) {
