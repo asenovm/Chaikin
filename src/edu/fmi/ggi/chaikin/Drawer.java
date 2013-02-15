@@ -47,4 +47,9 @@ public class Drawer implements DrawingCallback {
 		// blank
 	}
 
+	@Override
+	public void onResetRequired() {
+		polygon.reset();
+	}
+
 }

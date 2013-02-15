@@ -58,6 +58,7 @@ public class DrawingSurface extends JPanel {
 	 *            that is to be drawn
 	 */
 	public void draw(final List<Point> points) {
+		tryClearScreen(points);
 		final Graphics graphics = getGraphics();
 		for (int i = 0; i < points.size() - 1; ++i) {
 			final Point startPoint = points.get(i);
@@ -74,4 +75,11 @@ public class DrawingSurface extends JPanel {
 		graphics.fillRect(0, 0, PANEL_WIDTH, PANEL_HEIGHT);
 		graphics.setColor(Color.BLACK);
 	}
+
+	private void tryClearScreen(final List<Point> points) {
+		if (points.isEmpty()) {
+			clearScreen();
+		}
+	}
+
 }

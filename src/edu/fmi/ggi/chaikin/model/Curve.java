@@ -128,4 +128,9 @@ public class Curve {
 		final Point endPoint = points.get(points.size() - 1);
 		return startPoint.equals(endPoint);
 	}
+
+	public void reset() {
+		points.clear();
+		notifyObservers();
+	}
 }

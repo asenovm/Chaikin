@@ -24,4 +24,6 @@ public interface DrawingCallback {
 	 * screen has been clicked
 	 */
 	void onClearScreenRequired();
+
+	void onResetRequired();
 }

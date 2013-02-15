@@ -89,4 +89,9 @@ public class DrawingFrame extends JFrame implements DrawingObserver,
 		drawingSurface.clearScreen();
 	}
 
+	@Override
+	public void onResetRequired() {
+		callback.onResetRequired();
+	}
+
 }

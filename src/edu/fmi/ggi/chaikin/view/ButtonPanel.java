@@ -13,6 +13,8 @@ import edu.fmi.ggi.chaikin.listeners.DrawingCallback;
 
 public class ButtonPanel extends JPanel {
 
+	private static final String TEXT_BUTTON_RESET = "Reset";
+
 	/**
 	 * {@value}
 	 */
@@ -32,7 +34,7 @@ public class ButtonPanel extends JPanel {
 	 * {@value}
 	 * 
 	 */
-	private static final int WIDTH_BUTTON = 150;
+	private static final int WIDTH_BUTTON = 100;
 
 	/**
 	 * {@value}
@@ -67,7 +69,7 @@ public class ButtonPanel extends JPanel {
 	/**
 	 * Constructs a new panel for holding the drawing-related buttons that will
 	 * call the respective methods of the {@link DrawingCallback} given when
-	 * needed
+	 * needeadd
 	 * 
 	 * @param callback
 	 *            the callback that is to be called when the respective events
@@ -81,6 +83,19 @@ public class ButtonPanel extends JPanel {
 		addClosePolygonButton(callback);
 		addSmoothPolygonButton(callback);
 		addClearScreenButton(callback);
+		addResetButton(callback);
+	}
+
+	private void addResetButton(final DrawingCallback callback) {
+		final Button resetButton = getButton(TEXT_BUTTON_RESET);
+		resetButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				callback.onResetRequired();
+			}
+		});
+		add(resetButton);
 	}
 
 	private void addClearScreenButton(final DrawingCallback callback) {
