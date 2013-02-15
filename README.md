@@ -16,6 +16,8 @@ that start from the respective vertex. Their coordinates are computed as follows
 
 <img src="http://www.idav.ucdavis.edu/education/CAGDNotes/Chaikins-Algorithm/img8.gif" alt="chaikin" />
 
+<img src="http://www.idav.ucdavis.edu/education/CAGDNotes/Chaikins-Algorithm/img9.gif" /> <img src="http://www.idav.ucdavis.edu/education/CAGDNotes/Chaikins-Algorithm/img10.gif" /> <img src="http://www.idav.ucdavis.edu/education/CAGDNotes/Chaikins-Algorithm/img14.gif" />
+
 ##L-systems##
 Some details about the use of L-systems go here
 
