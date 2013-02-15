@@ -13,7 +13,10 @@ import edu.fmi.ggi.chaikin.listeners.DrawingCallback;
 
 public class ButtonPanel extends JPanel {
 
-	private static final String TEXT_BUTTON_RESET = "Reset";
+	/**
+	 * {@value}
+	 */
+	private static final long serialVersionUID = -6011518807905264738L;
 
 	/**
 	 * {@value}
@@ -39,27 +42,27 @@ public class ButtonPanel extends JPanel {
 	/**
 	 * {@value}
 	 */
-	private static final String TEXT_BUTTON_CLEAR_SCREEN = "Clear screen";
+	private static final String TEXT_BUTTON_RESET = "Reset";
 
 	/**
 	 * {@value}
 	 */
-	private static final String TEXT_BUTTON_CLOSE_POLYGON = "Close Polygon";
+	private static final String TEXT_BUTTON_CLEAR_SCREEN = "Clear";
 
 	/**
 	 * {@value}
 	 */
-	private static final String TEXT_BUTTON_SMOOTH_POLYGON = "Smooth Polygon";
+	private static final String TEXT_BUTTON_CLOSE_POLYGON = "Close";
+
+	/**
+	 * {@value}
+	 */
+	private static final String TEXT_BUTTON_SMOOTH_POLYGON = "Smoothen";
 
 	/**
 	 * {@value}
 	 */
 	private static final String BACKGROUND_BUTTON = "#A1998E";
-
-	/**
-	 * {@value}
-	 */
-	private static final long serialVersionUID = -6011518807905264738L;
 
 	/**
 	 * {@value}
