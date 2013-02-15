@@ -16,7 +16,7 @@ public class Curve {
 	private final List<Point> points;
 
 	/**
-	 * Constructs a new empty polygon
+	 * Constructs a new empty curve
 	 */
 	public Curve() {
 		observers = new LinkedHashSet<DrawingObserver>();
@@ -25,7 +25,7 @@ public class Curve {
 
 	/**
 	 * Adds the point with the specified <tt>x</tt> and <tt>y</tt> coordinates
-	 * to this polygon.
+	 * to this curve.
 	 * 
 	 * @param x
 	 *            the <tt>x</tt> coordinate of the point that is to be added
@@ -39,7 +39,7 @@ public class Curve {
 
 	/**
 	 * Adds the specified <tt>observer</tt> to the list of observers that is to
-	 * be notified when the polygon changes
+	 * be notified when the curve changes
 	 * 
 	 * @param observer
 	 *            the observer that is to be notified when the polygon changes
@@ -63,8 +63,8 @@ public class Curve {
 	}
 
 	/**
-	 * Closes the polygon. That is to connect the last point added with the
-	 * initial point of the polygon
+	 * Closes the curve. That is to connect the last point added with the
+	 * initial point of the curve
 	 */
 	public void close() {
 		final Point first = points.get(0);
@@ -73,8 +73,8 @@ public class Curve {
 	}
 
 	/**
-	 * Smoothens the edges of the polygon so that it forms a B-spline with the
-	 * same control points as the vertexes of the polygon
+	 * Smoothens the edges of the curve so that it forms a B-spline with the
+	 * same control points as the vertexes of the curve
 	 */
 	public void smoothenPolygon() {
 		final String vertexes = this.toString();
@@ -124,12 +124,21 @@ public class Curve {
 		}
 	}
 
+	/**
+	 * Returns whether or not the curve is a closed one
+	 * 
+	 * @return whether or not the curve is a closed one
+	 */
 	public boolean isClosed() {
 		final Point startPoint = points.get(0);
 		final Point endPoint = points.get(points.size() - 1);
 		return startPoint.equals(endPoint);
 	}
 
+	/**
+	 * Resets the current curve, meaning that all previously added points will
+	 * be removed
+	 */
 	public void reset() {
 		points.clear();
 		notifyObservers();

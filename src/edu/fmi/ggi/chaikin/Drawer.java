@@ -9,22 +9,25 @@ import edu.fmi.ggi.chaikin.view.DrawingFrame;
 
 public class Drawer implements DrawingCallback {
 
-	private final Curve polygon;
+	private final Curve curve;
 
 	private final DrawingFrame frame;
 
 	private class DrawingSurfaceListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(final MouseEvent event) {
-			polygon.addPoint(event.getPoint());
+			curve.addPoint(event.getPoint());
 		}
 	}
 
+	/**
+	 * Constructs a new drawer instance to be used for drawing on a surface
+	 */
 	public Drawer() {
-		polygon = new Curve();
+		curve = new Curve();
 		frame = new DrawingFrame(this);
 
-		polygon.addObserver(frame);
+		curve.addObserver(frame);
 		frame.addMouseListener(new DrawingSurfaceListener());
 	}
 
@@ -32,24 +35,36 @@ public class Drawer implements DrawingCallback {
 		new Drawer();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void onClosePolygonRequired() {
-		polygon.close();
+		curve.close();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void onSmoothPolygonRequired() {
-		polygon.smoothenPolygon();
+		curve.smoothenPolygon();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void onClearScreenRequired() {
 		// blank
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void onResetRequired() {
-		polygon.reset();
+		curve.reset();
 	}
 
 }

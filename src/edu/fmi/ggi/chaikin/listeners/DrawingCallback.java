@@ -25,5 +25,9 @@ public interface DrawingCallback {
 	 */
 	void onClearScreenRequired();
 
+	/**
+	 * A callback fired when the button for resetting the shape that has been
+	 * drawn so far is clicked
+	 */
 	void onResetRequired();
 }
