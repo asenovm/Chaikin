@@ -9,6 +9,9 @@ public class CurveLSystem extends LSystem {
 		super(input);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected void closeShape(List<Point> result) {
 		// blank

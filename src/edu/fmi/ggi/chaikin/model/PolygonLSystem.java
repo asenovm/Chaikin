@@ -9,6 +9,9 @@ public class PolygonLSystem extends LSystem {
 		super(input);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	protected void closeShape(final List<Point> result) {
 		final Point first = result.get(0);
 		result.add(first);

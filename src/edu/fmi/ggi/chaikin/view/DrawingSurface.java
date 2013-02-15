@@ -68,6 +68,9 @@ public class DrawingSurface extends JPanel {
 		}
 	}
 
+	/**
+	 * Clears everything that has been drawn so far on the screen
+	 */
 	public void clearScreen() {
 		final Graphics graphics = getGraphics();
 		graphics.clearRect(0, 0, PANEL_WIDTH, PANEL_HEIGHT);

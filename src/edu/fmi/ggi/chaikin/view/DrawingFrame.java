@@ -84,11 +84,17 @@ public class DrawingFrame extends JFrame implements DrawingObserver,
 		callback.onSmoothPolygonRequired();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void onClearScreenRequired() {
 		drawingSurface.clearScreen();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void onResetRequired() {
 		callback.onResetRequired();
