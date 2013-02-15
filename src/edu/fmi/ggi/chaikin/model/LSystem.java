@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LSystem {
+public abstract class LSystem {
 
 	/**
 	 * {@value}
@@ -32,6 +32,10 @@ public class LSystem {
 
 	private final StringBuilder builder;
 
+	public static LSystem from(final String input, final boolean isClosed) {
+		return isClosed ? new PolygonLSystem(input) : new CurveLSystem(input);
+	}
+
 	/**
 	 * Construct a new L-system that will parse the <tt>input</tt> string using
 	 * its internal rules
@@ -39,7 +43,7 @@ public class LSystem {
 	 * @param input
 	 *            the input string to be parsed, using the rules of the l-system
 	 */
-	public LSystem(final String input) {
+	protected LSystem(final String input) {
 		this.input = input;
 		builder = new StringBuilder();
 	}
@@ -86,7 +90,14 @@ public class LSystem {
 
 	private Collection<Point> parseAndAddPoints() {
 		final List<Point> result = new ArrayList<Point>();
+		parsePoints(result);
+		closeShape(result);
+		return result;
+	}
 
+	protected abstract void closeShape(final List<Point> result);
+
+	private void parsePoints(final List<Point> result) {
 		final String points = builder.toString();
 		final String[] stringPoints = points.split(PATTERN_SPLIT_POINT);
 
@@ -95,11 +106,6 @@ public class LSystem {
 			final int y = Integer.parseInt(stringPoints[i + 1]);
 			result.add(new Point(x, y));
 		}
-
-		final Point first = result.get(0);
-		result.add(first);
-
-		return result;
 	}
 
 	private Point getNewEndPoint(final Point middle, final Point end) {

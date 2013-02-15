@@ -79,8 +79,21 @@ public class Polygon {
 	public void smoothenPolygon() {
 		final String vertexes = this.toString();
 
+		final Point start = points.get(0);
+		final Point end = points.get(points.size() - 1);
+		final boolean isClosed = isClosed();
+
 		points.clear();
-		points.addAll(new LSystem(vertexes).expand());
+
+		if (!isClosed) {
+			points.add(start);
+		}
+
+		points.addAll(LSystem.from(vertexes, isClosed).expand());
+
+		if (!isClosed) {
+			points.add(end);
+		}
 
 		notifyObservers();
 	}
@@ -95,10 +108,12 @@ public class Polygon {
 			builder.append(" ");
 		}
 
-		final Point startPoint = points.get(1);
-		builder.append(startPoint.x);
-		builder.append(" ");
-		builder.append(startPoint.y);
+		if (isClosed()) {
+			final Point startPoint = points.get(1);
+			builder.append(startPoint.x);
+			builder.append(" ");
+			builder.append(startPoint.y);
+		}
 		return builder.toString();
 	}
 
@@ -106,5 +121,11 @@ public class Polygon {
 		for (final DrawingObserver observer : observers) {
 			observer.onModelChanged(Collections.unmodifiableList(points));
 		}
+	}
+
+	public boolean isClosed() {
+		final Point startPoint = points.get(0);
+		final Point endPoint = points.get(points.size() - 1);
+		return startPoint.equals(endPoint);
 	}
 }
