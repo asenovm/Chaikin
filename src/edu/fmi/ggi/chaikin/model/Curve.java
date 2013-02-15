@@ -114,6 +114,7 @@ public class Curve {
 			builder.append(" ");
 			builder.append(startPoint.y);
 		}
+
 		return builder.toString();
 	}
 

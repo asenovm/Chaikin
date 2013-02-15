@@ -32,8 +32,19 @@ public abstract class LSystem {
 
 	private final StringBuilder builder;
 
-	public static LSystem from(final String input, final boolean isClosed) {
-		return isClosed ? new PolygonLSystem(input) : new CurveLSystem(input);
+	/**
+	 * A factory method to instantiate the respective L-system successor, based
+	 * on the parameters given
+	 * 
+	 * @param input
+	 *            the string on which the L-System will operate
+	 * @param isClosedCurve
+	 *            whether or not L-System is for a closed curve
+	 * @return the corresponding to the parameters L-system
+	 */
+	public static LSystem from(final String input, final boolean isClosedCurve) {
+		return isClosedCurve ? new PolygonLSystem(input) : new CurveLSystem(
+				input);
 	}
 
 	/**
@@ -59,6 +70,14 @@ public abstract class LSystem {
 		return smoothenEdges(input);
 	}
 
+	/**
+	 * Close the shape this L-system is associated with by inserting a point at
+	 * a specific location
+	 * 
+	 * @param result
+	 *            the collection of points that corresponds to the shape this
+	 *            L-system is associated with
+	 */
 	protected abstract void closeShape(final List<Point> result);
 
 	private Collection<Point> smoothenEdges(final String vertexes) {

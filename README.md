@@ -8,7 +8,13 @@ for generative art*, taught in the Faculty of Mathematics and Informatics
 to Sofia University "St. Kliment Ohridski"
 
 ##Algorithm##
-Some details about the Chaiking's algorithm will go here
+The algorithm is applied on curve with N vertexes. The goal is to get a smooth curve,
+similar to a quadratic B-spline with control points at the vertexes of the initial
+curve. The algorithm iteratively removes the edges of the curve, by replacing each
+one of the vertexes with another two. These two points are located at the edges
+that start from the respective vertex. Their coordinates are computed as follows:
+
+<img src="http://www.idav.ucdavis.edu/education/CAGDNotes/Chaikins-Algorithm/img8.gif" alt="chaikin" />
 
 ##L-systems##
 Some details about the use of L-systems go here
