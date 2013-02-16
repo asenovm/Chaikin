@@ -37,7 +37,7 @@ F+F-F+F+F-F-F+F-F+F+F-F
 
 
 ##License##
-The code can be freely used and distributed under the terms of the GPL license.
+The code can be freely used and distributed under the terms of the MIT license.
 See the LICENSE file for details
 
 ##Author##
