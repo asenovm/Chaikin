@@ -9,6 +9,13 @@ import java.util.Set;
 
 import edu.fmi.ggi.chaikin.listeners.DrawingObserver;
 
+/**
+ * A model class to hold the info about the curve that is being drawn on the
+ * screen
+ * 
+ * @author martin
+ * 
+ */
 public class Curve {
 
 	private final Set<DrawingObserver> observers;
@@ -81,6 +88,7 @@ public class Curve {
 
 		final Point start = points.get(0);
 		final Point end = points.get(points.size() - 1);
+
 		final boolean isClosed = isClosed();
 
 		points.clear();
@@ -101,6 +109,7 @@ public class Curve {
 	@Override
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
+
 		for (final Point point : points) {
 			builder.append(point.x);
 			builder.append(" ");
@@ -116,12 +125,6 @@ public class Curve {
 		}
 
 		return builder.toString();
-	}
-
-	private void notifyObservers() {
-		for (final DrawingObserver observer : observers) {
-			observer.onModelChanged(Collections.unmodifiableList(points));
-		}
 	}
 
 	/**
@@ -142,5 +145,11 @@ public class Curve {
 	public void reset() {
 		points.clear();
 		notifyObservers();
+	}
+
+	private void notifyObservers() {
+		for (final DrawingObserver observer : observers) {
+			observer.onModelChanged(Collections.unmodifiableList(points));
+		}
 	}
 }

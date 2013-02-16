@@ -10,7 +10,9 @@ to Sofia University "St. Kliment Ohridski"
 ##Algorithm##
 The algorithm is applied on curve with N vertexes. The goal is to get a smooth curve,
 similar to a quadratic B-spline with control points at the vertexes of the initial
-curve. The algorithm iteratively removes the edges of the curve, by replacing each
+curve. 
+
+The algorithm iteratively removes the edges of the curve, by replacing each
 one of the vertexes with another two. These two points are located at the edges
 that start from the respective vertex. Their coordinates are computed as follows:
 
@@ -21,7 +23,18 @@ that start from the respective vertex. Their coordinates are computed as follows
 <img src="http://www.idav.ucdavis.edu/education/CAGDNotes/Chaikins-Algorithm/img12.gif" /> <img src="http://www.idav.ucdavis.edu/education/CAGDNotes/Chaikins-Algorithm/img13.gif" /> <img src="http://www.idav.ucdavis.edu/education/CAGDNotes/Chaikins-Algorithm/img14.gif" />
 
 ##L-systems##
-Some details about the use of L-systems go here
+An L-system specifies a set of rules to be applied on an input string.
+L-systems are very similar in their nature to context-free grammars, but with
+the difference that an L-system applies all of its rules simultaneously.
+
+Example L-system:
+
+axiom: F->F+F-F
+input: F+F-F+F
+
+result of single application of the rules of the L-system over the input string:
+F+F-F+F+F-F-F+F-F+F+F-F
+
 
 ##License##
 The code can be freely used and distributed under the terms of the GPL license.

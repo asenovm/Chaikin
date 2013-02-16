@@ -7,6 +7,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * A base class for representing an L-system
+ * 
+ * @author martin
+ * 
+ */
 public abstract class LSystem {
 
 	/**

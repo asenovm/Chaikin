@@ -7,6 +7,13 @@ import edu.fmi.ggi.chaikin.listeners.DrawingCallback;
 import edu.fmi.ggi.chaikin.model.Curve;
 import edu.fmi.ggi.chaikin.view.DrawingFrame;
 
+/**
+ * The main class of the application, responsible for dispatching events to the
+ * respective handlers
+ * 
+ * @author martin
+ * 
+ */
 public class Drawer implements DrawingCallback {
 
 	private final Curve curve;
