@@ -25,6 +25,11 @@ public class DrawingFrame extends JFrame implements DrawingObserver,
 	 */
 	private static final long serialVersionUID = -7055198570822987608L;
 
+	/**
+	 * {@value}
+	 */
+	private static final String TEXT_TITLE_WINDOW = "Chaikin algorithm";
+
 	private final DrawingSurface drawingSurface;
 
 	private final DrawingCallback callback;
@@ -38,6 +43,7 @@ public class DrawingFrame extends JFrame implements DrawingObserver,
 	 */
 	public DrawingFrame(final DrawingCallback callback) {
 		setLayout(new BorderLayout(0, 5));
+		setTitle(TEXT_TITLE_WINDOW);
 
 		this.callback = callback;
 
