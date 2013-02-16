@@ -29,10 +29,10 @@ the difference that an L-system applies all of its rules simultaneously.
 
 Example L-system:
 
-axiom: F->F+F-F
-input: F+F-F+F
+axiom: F->F+F-F <br />
+input: F+F-F+F <br />
 
-result of single application of the rules of the L-system over the input string:
+result of single application of the rules of the L-system over the input string: <br/>
 F+F-F+F+F-F-F+F-F+F+F-F
 
 
